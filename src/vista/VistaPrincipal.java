@@ -1,4 +1,5 @@
 package vista;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
@@ -15,16 +16,24 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
+import controlador.MainController;
+import Modelo.ConexionDB;
 import Modelo.UsuariosModel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaPrincipal extends JPanel {
 	private JTextField textField;
 	public static JPanel panelprincipal;
-
-	UsuariosModel usuarios;
-	
+	private JComboBox comboBox;
+	private ConexionDB ConexionDB;
+	private ArrayList<String> usuarios;
 	public VistaPrincipal() {
+
+
 		setLayout(null);
+		
 		
 		panelprincipal = new JPanel();
 		panelprincipal.setLayout(null);
@@ -38,9 +47,14 @@ public class VistaPrincipal extends JPanel {
 		label.setBounds(20, 11, 121, 116);
 		panelprincipal.add(label);
 		
-		JButton button = new JButton("Juegos >>");
-		button.setBounds(192, 31, 188, 23);
-		panelprincipal.add(button);
+		JButton btnjuegos = new JButton("Juegos >>");
+		btnjuegos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainController.getInstance().showJuegos();
+			}
+		});
+		btnjuegos.setBounds(192, 31, 188, 23);
+		panelprincipal.add(btnjuegos);
 		
 		JButton button_1 = new JButton("Perfil >>");
 		button_1.setBounds(192, 65, 188, 23);
@@ -50,7 +64,7 @@ public class VistaPrincipal extends JPanel {
 		label_1.setBounds(20, 138, 75, 23);
 		panelprincipal.add(label_1);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setBounds(20, 172, 141, 20);
 		panelprincipal.add(comboBox);
 		
@@ -72,14 +86,17 @@ public class VistaPrincipal extends JPanel {
 		button_3.setEnabled(false);
 		button_3.setBounds(20, 315, 141, 23);
 		panelprincipal.add(button_3);
-
-		
-		//AÑADIMOS LOS DATOS DEL ARRAY AL COMBOBOX
-		usuarios =new UsuariosModel();
-		
-		Iterator<String> it=usuarios.getUsuarios().iterator();
-		while(it.hasNext()){
-			comboBox.addItem((String)it.next());
-		}
+	
+	}
+	//AÑADIMOS LOS DATOS DEL ARRAY AL COMBOBOX
+	
+	public void putUsuarios(ArrayList<String> usuarios){
+	Iterator<String> it=usuarios.iterator();
+	while(it.hasNext()){
+		comboBox.addItem((String)it.next());
+	
+		}  
 	}
 }
+	
+
